@@ -1,0 +1,99 @@
+basePath: /v1/api
+definitions:
+  station.ErrorAPIResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  station.GetScedulesAPIResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/station.SceduleResponse'
+        type: array
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  station.GetStationsAPIResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/station.StationResponse'
+        type: array
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  station.SceduleResponse:
+    properties:
+      station:
+        type: string
+      time:
+        type: string
+    type: object
+  station.StationResponse:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API untuk mendapatkan daftar stasiun dan jadwal keberangkatan MRT Jakarta.
+  title: Jadwal MRT API
+  version: "1.0"
+paths:
+  /stations:
+    get:
+      consumes:
+      - application/json
+      description: Mengambil seluruh data stasiun MRT Jakarta
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/station.GetStationsAPIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/station.ErrorAPIResponse'
+      summary: Daftar semua stasiun MRT
+      tags:
+      - Stations
+  /stations/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Mengambil jadwal keberangkatan berikutnya untuk dua jurusan dari
+        stasiun terpilih
+      parameters:
+      - description: Station ID (nid)
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/station.GetScedulesAPIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/station.ErrorAPIResponse'
+      summary: Cek jadwal keberangkatan berdasarkan stasiun
+      tags:
+      - Stations
+swagger: "2.0"

@@ -20,6 +20,15 @@ func Initiate(router *gin.RouterGroup) {
 	})
 }
 
+// GetAllStation godoc
+// @Summary Daftar semua stasiun MRT
+// @Description Mengambil seluruh data stasiun MRT Jakarta
+// @Tags Stations
+// @Accept json
+// @Produce json
+// @Success 200 {object} GetStationsAPIResponse
+// @Failure 400 {object} ErrorAPIResponse
+// @Router /stations [get]
 func GetAllStation(c *gin.Context, service Service) {
 	datas, err := service.GetAllStation()
 	if err != nil {
@@ -37,6 +46,16 @@ func GetAllStation(c *gin.Context, service Service) {
 	})
 }
 
+// CheckScedulesByStation godoc
+// @Summary Cek jadwal keberangkatan berdasarkan stasiun
+// @Description Mengambil jadwal keberangkatan berikutnya untuk dua jurusan dari stasiun terpilih
+// @Tags Stations
+// @Accept json
+// @Produce json
+// @Param id path string true "Station ID (nid)"
+// @Success 200 {object} GetScedulesAPIResponse
+// @Failure 400 {object} ErrorAPIResponse
+// @Router /stations/{id} [get]
 func CheckScedulesByStation(c *gin.Context, service Service) {
 	id := c.Param("id")
 
